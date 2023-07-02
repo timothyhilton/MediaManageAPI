@@ -1,1 +1,1 @@
-{"ContentRoots":["C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\"],"Root":{"Children":null,"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
+{"ContentRoots":["C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\"],"Root":{"Children":{"escrow":{"Children":{"2022-12-11 21-26-36.mkv":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"escrow/2022-12-11 21-26-36.mkv"},"Patterns":null}},"Asset":null,"Patterns":null}},"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}

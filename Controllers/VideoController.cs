@@ -1,4 +1,5 @@
-﻿using MediaManageAPI.Model;
+﻿using MediaManageAPI.Models;
+using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaManageAPI.Controllers;
@@ -12,12 +13,14 @@ public class VideoController : ControllerBase
     {
         try
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file.FileName);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", file.FileName);
 
             using (Stream stream = new FileStream(path, FileMode.Create))
             {
                 file.FormFile.CopyTo(stream);
             }
+
+            Console.WriteLine(file.AccessToken);
 
             return StatusCode(StatusCodes.Status201Created);
         }

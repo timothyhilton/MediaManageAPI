@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\2022-12-11 21-26-36.mkv",
+      "PackagePath": "staticwebassets\\escrow\\2022-12-11 21-26-36.mkv"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.MediaManageAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.MediaManageAPI.props",
+      "PackagePath": "build\\MediaManageAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.MediaManageAPI.props",
+      "PackagePath": "buildMultiTargeting\\MediaManageAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.MediaManageAPI.props",
+      "PackagePath": "buildTransitive\\MediaManageAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
