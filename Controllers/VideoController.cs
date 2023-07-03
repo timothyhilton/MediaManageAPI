@@ -22,10 +22,11 @@ public class VideoController : ControllerBase
     [RequestSizeLimit(150_000_000)]
     public ActionResult Post([FromForm] VideoModel video)
     {
+        VideoInfoModel videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoArgs);
 
         try
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", "test."+ video.VideoArgs.fileExtension);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", "test."+ videoInfos.fileExtension);
             
             using (Stream stream = new FileStream(path, FileMode.Create))
             {
