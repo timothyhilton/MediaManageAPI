@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uBIBqBpgPUn4HXqYsWZe4DnB02PD7KyJeoWdyAwDl70=",
+  "Hash": "kUVqMe/CFLySYziNjYyAwcYZO+RIga0fBVPc9Iv5bUk=",
   "Source": "MediaManageAPI",
   "BasePath": "_content/MediaManageAPI",
   "Mode": "Default",
@@ -15,23 +15,5 @@
       "Pattern": "**"
     }
   ],
-  "Assets": [
-    {
-      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\2022-12-11 21-26-36.mkv",
-      "SourceId": "MediaManageAPI",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
-      "BasePath": "_content/MediaManageAPI",
-      "RelativePath": "escrow/2022-12-11 21-26-36.mkv",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\escrow\\2022-12-11 21-26-36.mkv"
-    }
-  ]
+  "Assets": []
 }

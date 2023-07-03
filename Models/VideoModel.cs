@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Http;
-
 namespace MediaManageAPI.Models
 {
     public class VideoModel
     {
-        public string AccessToken { get; set; }
-        public string FileName { get; set; }
-        public IFormFile FormFile { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public string[] tags { get; set; }
+        public string fileExtension { get; set; }
+        public byte[] file { get; set; }
     }
 }

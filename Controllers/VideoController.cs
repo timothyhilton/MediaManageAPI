@@ -1,6 +1,8 @@
 ﻿using MediaManageAPI.Models;
 using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Reflection.Metadata;
 
 namespace MediaManageAPI.Controllers;
 
@@ -8,19 +10,18 @@ namespace MediaManageAPI.Controllers;
 [ApiController]
 public class VideoController : ControllerBase
 {
+    [HttpGet("{str}")]
+    public String Echo(String str)
+    {
+        return str; // this is just to test if the endpoint /video/ is accessible
+    }
+
     [HttpPost]
-    public ActionResult Post([FromForm] VideoModel file)
+    public ActionResult Post(VideoRequestModel videoRequest)
     {
         try
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", file.FileName);
-
-            using (Stream stream = new FileStream(path, FileMode.Create))
-            {
-                file.FormFile.CopyTo(stream);
-            }
-
-            Console.WriteLine(file.AccessToken);
+            Console.WriteLine(videoRequest.accessToken);
 
             return StatusCode(StatusCodes.Status201Created);
         }
