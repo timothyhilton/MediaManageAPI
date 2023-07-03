@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\2022-12-11 21-26-36.mkv",
-      "PackagePath": "staticwebassets\\escrow\\2022-12-11 21-26-36.mkv"
+      "Id": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\test.mp4",
+      "PackagePath": "staticwebassets\\escrow\\test.mp4"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.MediaManageAPI.Microsoft.AspNetCore.StaticWebAssets.props",

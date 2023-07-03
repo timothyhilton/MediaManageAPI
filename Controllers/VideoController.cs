@@ -20,9 +20,13 @@ public class VideoController : ControllerBase
 
     [HttpPost]
     [RequestSizeLimit(150_000_000)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public ActionResult Post([FromForm] VideoModel video)
     {
-        VideoInfoModel videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoArgs);
+        VideoInfoModel videoInfos = new VideoInfoModel();
+
+        try { videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoArgs); }
+        catch { return StatusCode(StatusCodes.Status400BadRequest); }
 
         try
         {
