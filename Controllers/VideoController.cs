@@ -1,9 +1,10 @@
 ﻿using MediaManageAPI.Models;
 using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System;
 using System.IO;
-using System.Reflection.Metadata;
 
 namespace MediaManageAPI.Controllers;
 
@@ -18,10 +19,28 @@ public class VideoController : ControllerBase
     }
 
     [HttpPost]
+    [RequestSizeLimit(150_000_000)]
     public ActionResult Post([FromForm] VideoModel video)
     {
-        VideoArgModel videoArgs = JsonConvert.DeserializeObject<VideoArgModel>(video.videoArgs);
-        Console.WriteLine(videoArgs.title);
-        return StatusCode(StatusCodes.Status201Created);
+        VideoArgModel videoArgs = new VideoArgModel();
+
+        try { videoArgs = JsonConvert.DeserializeObject<VideoArgModel>(video.VideoArgs); }
+        catch { return StatusCode(StatusCodes.Status400BadRequest); }
+
+        try
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", "test."+ videoArgs.fileExtension);
+            
+            using (Stream stream = new FileStream(path, FileMode.Create))
+            {
+                video.File.CopyTo(stream);
+            }
+
+            return StatusCode(StatusCodes.Status201Created);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }

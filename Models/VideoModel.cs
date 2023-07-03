@@ -4,7 +4,7 @@ namespace MediaManageAPI.Models
 {
     public class VideoModel
     {
-        public string videoArgs {  get; set; }
-        public IFormFile file { get; set; }
+        public string VideoArgs { get; set; } // this should be a JSON-stringified VideoArgModel
+        public IFormFile File { get; set; }
     }
 }
