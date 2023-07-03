@@ -1,3 +1,5 @@
+using Microsoft.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,7 +13,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
         builder => {
-            builder.WithOrigins("https://localhost:5173");
+            builder.WithOrigins("https://localhost:5173")
+            .WithMethods("POST", "GET", "PUT", "DELETE")
+            .WithHeaders(HeaderNames.ContentType);
         });
 });
 

@@ -1,6 +1,7 @@
 ﻿using MediaManageAPI.Models;
 using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.IO;
 using System.Reflection.Metadata;
 
@@ -17,17 +18,10 @@ public class VideoController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post(VideoRequestModel videoRequest)
+    public ActionResult Post([FromForm] VideoModel video)
     {
-        try
-        {
-            Console.WriteLine(videoRequest.accessToken);
-
-            return StatusCode(StatusCodes.Status201Created);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
+        VideoArgModel videoArgs = JsonConvert.DeserializeObject<VideoArgModel>(video.videoArgs);
+        Console.WriteLine(videoArgs.title);
+        return StatusCode(StatusCodes.Status201Created);
     }
 }
