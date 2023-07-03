@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Text;
 
 namespace MediaManageAPI.Controllers;
 
@@ -12,7 +13,11 @@ namespace MediaManageAPI.Controllers;
 [ApiController]
 public class VideoController : ControllerBase
 {
-    [HttpGet("{str}")]
+    Random random = new Random();
+    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    StringBuilder builder = new StringBuilder();
+
+[HttpGet("{str}")]
     public String Echo(String str)
     {
         return str; // this is just to test if the endpoint /video/ is accessible
@@ -25,17 +30,25 @@ public class VideoController : ControllerBase
     {
         VideoInfoModel videoInfos = new VideoInfoModel();
 
-        try { videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoArgs); }
-        catch { return StatusCode(StatusCodes.Status400BadRequest); }
+        try { videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoInfos); } // get the video information from the JSON in "video"
+        catch { return StatusCode(StatusCodes.Status400BadRequest); } // return bad request if it doesn't match the values required
 
-        try
+        try // saves the video file to a file with a random string as the name
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", "test."+ videoInfos.fileExtension);
+            for (int i = 0; i < 20; i++)
+            {
+                builder.Append(chars[(int)(random.NextDouble() * chars.Length)]);
+            }
+            string randomString = builder.ToString();
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", randomString+"."+videoInfos.fileExtension);
             
             using (Stream stream = new FileStream(path, FileMode.Create))
             {
                 video.File.CopyTo(stream);
             }
+
+
 
             return StatusCode(StatusCodes.Status201Created);
         }
