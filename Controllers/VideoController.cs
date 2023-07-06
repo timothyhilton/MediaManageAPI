@@ -26,7 +26,8 @@ public class VideoController : ControllerBase
     const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     StringBuilder builder = new StringBuilder();
 
-    [HttpGet("{str}")] // this is just to test if the endpoint /video/ is accessible
+    // just helps to test if the endpoint /video/ is accessible
+    [HttpGet("{str}")]
     public String Echo(String str)
     {
         return str; 
@@ -35,7 +36,7 @@ public class VideoController : ControllerBase
     [HttpPost]
     [RequestSizeLimit(150_000_000)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public ActionResult Post([FromForm] VideoModel video)
+    public async Task<ActionResult> Post([FromForm] VideoModel video)
     {
         VideoInfoModel videoInfos = new VideoInfoModel();
         string youtubeClientSecret = _config["youtubeClientSecret"];
@@ -62,7 +63,7 @@ public class VideoController : ControllerBase
             }
 
             // calls VideoService to post the video
-            VideoService.PostVideo(videoInfos, path, youtubeClientSecret);
+            await VideoService.PostVideo(videoInfos, path, youtubeClientSecret);
             return StatusCode(StatusCodes.Status201Created);
         }
         catch (Exception ex)
