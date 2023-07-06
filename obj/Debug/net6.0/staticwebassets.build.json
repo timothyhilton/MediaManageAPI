@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ayOC/W2HaC268riBRJzsIA7Ic9sJn45isbNiQc63Wx8=",
+  "Hash": "fPfCkE3NlCFqVZGQGwhmQLH7twZ23fvOpzCx/+JnF2I=",
   "Source": "MediaManageAPI",
   "BasePath": "_content/MediaManageAPI",
   "Mode": "Default",
@@ -16,6 +16,57 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\535FTSKELPSY2EVCV3TK.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/535FTSKELPSY2EVCV3TK.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\535FTSKELPSY2EVCV3TK.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\7HGYM2TH1XPTNZKRVDA3.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/7HGYM2TH1XPTNZKRVDA3.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\7HGYM2TH1XPTNZKRVDA3.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\BKY1JHHT3PBNV1BUJSYD.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/BKY1JHHT3PBNV1BUJSYD.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\BKY1JHHT3PBNV1BUJSYD.mp4"
+    },
     {
       "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\GBG64FI1X7UO8BKJ2B6C.mp4",
       "SourceId": "MediaManageAPI",
@@ -83,6 +134,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\escrow\\RLJ6FSCTI2X6QFJE3OFS.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\ZC8GLHG1GIB69JNGICTS.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/ZC8GLHG1GIB69JNGICTS.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\ZC8GLHG1GIB69JNGICTS.mp4"
     }
   ]
 }

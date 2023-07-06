@@ -13,7 +13,7 @@ using Google.Apis.Util.Store;
 namespace MediaManageAPI.Services;
 public class VideoService
 {
-    public static async void PostVideo(VideoInfoModel videoInfos, string videoPath, string youtubeClientSecret)
+    public static async Task PostVideo(VideoInfoModel videoInfos, string videoPath, string youtubeClientSecret)
     {
         {
             var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
@@ -27,15 +27,17 @@ public class VideoService
                 DataStore = new FileDataStore("Store")
             });
 
+            var tokenResponse = await flow.ExchangeCodeForTokenAsync(
+                "test", // temporary
+                videoInfos.authCode,
+                "https://www.googleapis.com/oauth2/v4/token",
+                CancellationToken.None
+            );
+
             var credential = new UserCredential(
                 flow, 
-                "test", 
-                await flow.ExchangeCodeForTokenAsync(
-                    "test", // temporary
-                    videoInfos.authCode, 
-                    "https://localhost:5173/", // temporary
-                    CancellationToken.None
-                )
+                "test", // temporary
+                tokenResponse
             );
 
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
