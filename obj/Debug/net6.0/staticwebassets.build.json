@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kUVqMe/CFLySYziNjYyAwcYZO+RIga0fBVPc9Iv5bUk=",
+  "Hash": "I5kNtECkDxH0ZU9HGxse92WN2cBwbRakOd74gp6Orcs=",
   "Source": "MediaManageAPI",
   "BasePath": "_content/MediaManageAPI",
   "Mode": "Default",
@@ -15,5 +15,23 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\1BMW6ZU3YZT9WNS9D2NT.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/1BMW6ZU3YZT9WNS9D2NT.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\1BMW6ZU3YZT9WNS9D2NT.mp4"
+    }
+  ]
 }

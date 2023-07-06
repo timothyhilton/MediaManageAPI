@@ -1,1 +1,1 @@
-{"ContentRoots":["C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\"],"Root":{"Children":null,"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
+{"ContentRoots":["C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\"],"Root":{"Children":{"escrow":{"Children":{"1BMW6ZU3YZT9WNS9D2NT.mp4":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"escrow/1BMW6ZU3YZT9WNS9D2NT.mp4"},"Patterns":null}},"Asset":null,"Patterns":null}},"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
