@@ -39,27 +39,29 @@ public class VideoController : ControllerBase
     {
         VideoInfoModel videoInfos = new VideoInfoModel();
         string youtubeClientSecret = _config["youtubeClientSecret"];
-        Console.WriteLine(youtubeClientSecret);
-        Console.ReadLine();
 
         try { videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoInfos); } // get the video information from the JSON in "video"
         catch { return StatusCode(StatusCodes.Status400BadRequest); } // return bad request if it doesn't match the values required
 
         try // saves the video file to a file with a random string as the name
         {
+            // generate random file name string
             for (int i = 0; i < 20; i++)
             {
                 builder.Append(chars[(int)(random.NextDouble() * chars.Length)]);
             }
             string randomString = builder.ToString();
 
+            // create path for video file to be saved
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", randomString + "." + videoInfos.fileExtension);
             
+            // saves video
             using (Stream stream = new FileStream(path, FileMode.Create))
             {
                 video.File.CopyTo(stream);
             }
 
+            // calls VideoService to post the video
             VideoService.PostVideo(videoInfos, path, youtubeClientSecret);
             return StatusCode(StatusCodes.Status201Created);
         }
