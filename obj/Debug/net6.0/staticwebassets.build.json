@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kUVqMe/CFLySYziNjYyAwcYZO+RIga0fBVPc9Iv5bUk=",
+  "Hash": "ayOC/W2HaC268riBRJzsIA7Ic9sJn45isbNiQc63Wx8=",
   "Source": "MediaManageAPI",
   "BasePath": "_content/MediaManageAPI",
   "Mode": "Default",
@@ -15,5 +15,74 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\GBG64FI1X7UO8BKJ2B6C.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/GBG64FI1X7UO8BKJ2B6C.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\GBG64FI1X7UO8BKJ2B6C.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\KOK555F1849J8X52PRCU.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/KOK555F1849J8X52PRCU.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\KOK555F1849J8X52PRCU.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\PIZDKCGIBKG1C53MN8P0.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/PIZDKCGIBKG1C53MN8P0.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\PIZDKCGIBKG1C53MN8P0.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\RLJ6FSCTI2X6QFJE3OFS.mp4",
+      "SourceId": "MediaManageAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
+      "BasePath": "_content/MediaManageAPI",
+      "RelativePath": "escrow/RLJ6FSCTI2X6QFJE3OFS.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\escrow\\RLJ6FSCTI2X6QFJE3OFS.mp4"
+    }
+  ]
 }

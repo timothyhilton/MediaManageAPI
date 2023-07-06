@@ -27,7 +27,16 @@ public class VideoService
                 DataStore = new FileDataStore("Store")
             });
 
-            var credential = new UserCredential(flow, "test", await flow.ExchangeCodeForTokenAsync("test", videoInfos.authCode, "", CancellationToken.None));
+            var credential = new UserCredential(
+                flow, 
+                "test", 
+                await flow.ExchangeCodeForTokenAsync(
+                    "test", // temporary
+                    videoInfos.authCode, 
+                    "https://localhost:5173/", // temporary
+                    CancellationToken.None
+                )
+            );
 
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
