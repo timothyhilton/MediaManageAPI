@@ -30,7 +30,7 @@ public class VideoService
             var tokenResponse = await flow.ExchangeCodeForTokenAsync(
                 "test", // temporary
                 videoInfos.authCode,
-                "https://www.googleapis.com/oauth2/v4/token",
+                "postmessage", // WHY DOES THIS WORK!?????
                 CancellationToken.None
             );
 

@@ -26,7 +26,8 @@ public class VideoController : ControllerBase
     const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     StringBuilder builder = new StringBuilder();
 
-    [HttpGet("{str}")] // this is just to test if the endpoint /video/ is accessible
+    // just helps to test if the endpoint /video/ is accessible
+    [HttpGet("{str}")]
     public String Echo(String str)
     {
         return str; 
