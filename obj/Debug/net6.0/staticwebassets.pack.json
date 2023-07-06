@@ -1,8 +1,12 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\test.mp4",
-      "PackagePath": "staticwebassets\\escrow\\test.mp4"
+      "Id": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\78PVNGYR6N9SWI07TX0P.mp4",
+      "PackagePath": "staticwebassets\\escrow\\78PVNGYR6N9SWI07TX0P.mp4"
+    },
+    {
+      "Id": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\escrow\\VXUUWQ239RB61EHNPLTQ.mp4",
+      "PackagePath": "staticwebassets\\escrow\\VXUUWQ239RB61EHNPLTQ.mp4"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.MediaManageAPI.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace MediaManageAPI.Controllers;
 
@@ -13,14 +14,22 @@ namespace MediaManageAPI.Controllers;
 [ApiController]
 public class VideoController : ControllerBase
 {
+    private readonly IConfiguration _config;
+
+    public VideoController(IConfiguration config)
+    {
+        _config = config;
+    }
+
+    // setup for random file name generation
     Random random = new Random();
     const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     StringBuilder builder = new StringBuilder();
 
-[HttpGet("{str}")]
+    [HttpGet("{str}")] // this is just to test if the endpoint /video/ is accessible
     public String Echo(String str)
     {
-        return str; // this is just to test if the endpoint /video/ is accessible
+        return str; 
     }
 
     [HttpPost]
@@ -29,6 +38,9 @@ public class VideoController : ControllerBase
     public ActionResult Post([FromForm] VideoModel video)
     {
         VideoInfoModel videoInfos = new VideoInfoModel();
+        string youtubeClientSecret = _config["youtubeClientSecret"];
+        Console.WriteLine(youtubeClientSecret);
+        Console.ReadLine();
 
         try { videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoInfos); } // get the video information from the JSON in "video"
         catch { return StatusCode(StatusCodes.Status400BadRequest); } // return bad request if it doesn't match the values required
@@ -41,19 +53,20 @@ public class VideoController : ControllerBase
             }
             string randomString = builder.ToString();
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", randomString+"."+videoInfos.fileExtension);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", randomString + "." + videoInfos.fileExtension);
             
             using (Stream stream = new FileStream(path, FileMode.Create))
             {
                 video.File.CopyTo(stream);
             }
 
-
-
+            VideoService.PostVideo(videoInfos, path, youtubeClientSecret);
             return StatusCode(StatusCodes.Status201Created);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Console.WriteLine("VideoController: request failed");
+            Console.WriteLine(ex.Message);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
