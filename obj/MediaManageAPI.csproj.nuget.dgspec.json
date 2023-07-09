@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\MediaManageAPI.csproj": {}
+    "D:\\source\\repos\\mediamanageapi\\MediaManageAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\MediaManageAPI.csproj": {
+    "D:\\source\\repos\\mediamanageapi\\MediaManageAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\MediaManageAPI.csproj",
+        "projectUniqueName": "D:\\source\\repos\\mediamanageapi\\MediaManageAPI.csproj",
         "projectName": "MediaManageAPI",
-        "projectPath": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\MediaManageAPI.csproj",
-        "packagesPath": "C:\\Users\\tim\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\obj\\",
+        "projectPath": "D:\\source\\repos\\mediamanageapi\\MediaManageAPI.csproj",
+        "packagesPath": "C:\\Users\\Tim\\.nuget\\packages\\",
+        "outputPath": "D:\\source\\repos\\mediamanageapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tim\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Tim\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -81,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.411\\RuntimeIdentifierGraph.json"
         }
       }
     }

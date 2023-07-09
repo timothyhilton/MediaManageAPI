@@ -13,7 +13,7 @@ using Google.Apis.Util.Store;
 namespace MediaManageAPI.Services;
 public class VideoService
 {
-    public static async Task PostVideo(VideoInfoModel videoInfos, string videoPath, string youtubeClientSecret)
+    public static async Task PostVideo(VideoModel video, string videoPath, string youtubeClientSecret)
     {
         {
             var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
@@ -29,7 +29,7 @@ public class VideoService
 
             var tokenResponse = await flow.ExchangeCodeForTokenAsync(
                 "test", // temporary
-                videoInfos.authCode,
+                video.authCode,
                 "postmessage", // WHY DOES THIS WORK!?????
                 CancellationToken.None
             );
@@ -46,19 +46,19 @@ public class VideoService
                 ApplicationName = Assembly.GetExecutingAssembly().GetName().Name
             });
 
-            var video = new Video();
-            video.Snippet = new VideoSnippet();
-            video.Snippet.Title = videoInfos.title;
-            video.Snippet.Description = videoInfos.description;
-            video.Snippet.Tags = new string[] { "testtag1", "testtag2" }; // temporary
-            video.Snippet.CategoryId = "1"; // temporary 
-            video.Status = new VideoStatus();
-            video.Status.PrivacyStatus = "unlisted"; // temporary, or "private" or "public"
+            var ytVideo = new Video();
+            ytVideo.Snippet = new VideoSnippet();
+            ytVideo.Snippet.Title = video.title;
+            ytVideo.Snippet.Description = video.description;
+            ytVideo.Snippet.Tags = new string[] { "testtag1", "testtag2" }; // temporary
+            ytVideo.Snippet.CategoryId = "1"; // temporary 
+            ytVideo.Status = new VideoStatus();
+            ytVideo.Status.PrivacyStatus = "unlisted"; // temporary, or "private" or "public"
             var filePath = videoPath; // Replace with path to actual movie file.
 
             using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
-                var videosInsertRequest = youtubeService.Videos.Insert(video, "snippet,status", fileStream, "video/*");
+                var videosInsertRequest = youtubeService.Videos.Insert(ytVideo, "snippet,status", fileStream, "video/*");
                 videosInsertRequest.ProgressChanged += videosInsertRequest_ProgressChanged;
                 videosInsertRequest.ResponseReceived += videosInsertRequest_ResponseReceived;
 
@@ -80,9 +80,9 @@ public class VideoService
             }
         }
 
-        void videosInsertRequest_ResponseReceived(Video video)
+        void videosInsertRequest_ResponseReceived(Video ytVideo)
         {
-            Console.WriteLine("Video id '{0}' was successfully uploaded.", video.Id);
+            Console.WriteLine("Video id '{0}' was successfully uploaded.", ytVideo.Id);
         }
     }
 }

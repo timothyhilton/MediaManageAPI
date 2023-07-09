@@ -4,9 +4,10 @@ namespace MediaManageAPI.Models
 {
     public class VideoModel
     {
-        public string VideoInfos { get; set; } 
-        // VideoInfos should always be a JSON-stringified VideoArgModel
-        // the above is done to avoid ugly code in the frontend
+        public string title { get; set; }
+        public string description { get; set; }
+        public string fileExtension { get; set; }
+        public string authCode { get; set; }
         public IFormFile File { get; set; }
     }
 }
