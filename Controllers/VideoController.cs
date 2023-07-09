@@ -38,11 +38,7 @@ public class VideoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> Post([FromForm] VideoModel video)
     {
-        VideoInfoModel videoInfos = new VideoInfoModel();
         string youtubeClientSecret = _config["youtubeClientSecret"];
-
-        try { videoInfos = JsonConvert.DeserializeObject<VideoInfoModel>(video.VideoInfos); } // get the video information from the JSON in "video"
-        catch { return StatusCode(StatusCodes.Status400BadRequest); } // return bad request if it doesn't match the values required
 
         try // saves the video file to a file with a random string as the name
         {
@@ -54,7 +50,7 @@ public class VideoController : ControllerBase
             string randomString = builder.ToString();
 
             // create path for video file to be saved
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", randomString + "." + videoInfos.fileExtension);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", randomString + "." + video.fileExtension);
             
             // saves video
             using (Stream stream = new FileStream(path, FileMode.Create))
@@ -63,7 +59,7 @@ public class VideoController : ControllerBase
             }
 
             // calls VideoService to post the video
-            await VideoService.PostVideo(videoInfos, path, youtubeClientSecret);
+            await VideoService.PostVideo(video, path, youtubeClientSecret);
             return StatusCode(StatusCodes.Status201Created);
         }
         catch (Exception ex)
