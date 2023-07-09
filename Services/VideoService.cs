@@ -13,7 +13,7 @@ using Google.Apis.Util.Store;
 namespace MediaManageAPI.Services;
 public class VideoService
 {
-    public static async Task PostVideo(VideoModel video, string videoPath, string youtubeClientSecret)
+    public static async Task PostVideo(VideoModel video, string youtubeClientSecret)
     {
         {
             var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
@@ -54,9 +54,8 @@ public class VideoService
             ytVideo.Snippet.CategoryId = "1"; // temporary 
             ytVideo.Status = new VideoStatus();
             ytVideo.Status.PrivacyStatus = "unlisted"; // temporary, or "private" or "public"
-            var filePath = videoPath; // Replace with path to actual movie file.
 
-            using (var fileStream = new FileStream(filePath, FileMode.Open))
+            using (var fileStream = video.File.OpenReadStream())
             {
                 var videosInsertRequest = youtubeService.Videos.Insert(ytVideo, "snippet,status", fileStream, "video/*");
                 videosInsertRequest.ProgressChanged += videosInsertRequest_ProgressChanged;

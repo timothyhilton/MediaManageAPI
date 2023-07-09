@@ -40,33 +40,8 @@ public class VideoController : ControllerBase
     {
         string youtubeClientSecret = _config["youtubeClientSecret"];
 
-        try // saves the video file to a file with a random string as the name
-        {
-            // generate random file name string
-            for (int i = 0; i < 20; i++)
-            {
-                builder.Append(chars[(int)(random.NextDouble() * chars.Length)]);
-            }
-            string randomString = builder.ToString();
-
-            // create path for video file to be saved
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/escrow", randomString + "." + video.fileExtension);
-            
-            // saves video
-            using (Stream stream = new FileStream(path, FileMode.Create))
-            {
-                video.File.CopyTo(stream);
-            }
-
-            // calls VideoService to post the video
-            await VideoService.PostVideo(video, path, youtubeClientSecret);
-            return StatusCode(StatusCodes.Status201Created);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("VideoController: request failed");
-            Console.WriteLine(ex.Message);
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
+        // calls VideoService to post the video
+        await VideoService.PostVideo(video, youtubeClientSecret);
+        return StatusCode(StatusCodes.Status201Created);
     }
 }
