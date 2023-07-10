@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "89EiqEvz0d1tYop3nlLGz53CJCmbya0VqQ1V95g318o=",
+  "Hash": "kUVqMe/CFLySYziNjYyAwcYZO+RIga0fBVPc9Iv5bUk=",
   "Source": "MediaManageAPI",
   "BasePath": "_content/MediaManageAPI",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "MediaManageAPI\\wwwroot",
       "Source": "MediaManageAPI",
-      "ContentRoot": "D:\\source\\repos\\mediamanageapi\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\tim\\source\\repos\\MediaManageAPI\\wwwroot\\",
       "BasePath": "_content/MediaManageAPI",
       "Pattern": "**"
     }

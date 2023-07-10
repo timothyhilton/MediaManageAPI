@@ -92,3 +92,10 @@ D:\source\repos\mediamanageapi\obj\Debug\net6.0\refint\MediaManageAPI.dll
 D:\source\repos\mediamanageapi\obj\Debug\net6.0\MediaManageAPI.pdb
 D:\source\repos\mediamanageapi\obj\Debug\net6.0\MediaManageAPI.genruntimeconfig.cache
 D:\source\repos\mediamanageapi\obj\Debug\net6.0\ref\MediaManageAPI.dll
+C:\Users\tim\source\repos\MediaManageAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\tim\source\repos\MediaManageAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\tim\source\repos\MediaManageAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\tim\source\repos\MediaManageAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\tim\source\repos\MediaManageAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\tim\source\repos\MediaManageAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\tim\source\repos\MediaManageAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
