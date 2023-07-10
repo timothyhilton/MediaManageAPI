@@ -21,11 +21,6 @@ public class VideoController : ControllerBase
         _config = config;
     }
 
-    // setup for random file name generation
-    Random random = new Random();
-    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    StringBuilder builder = new StringBuilder();
-
     // just helps to test if the endpoint /video/ is accessible
     [HttpGet("{str}")]
     public String Echo(String str)
