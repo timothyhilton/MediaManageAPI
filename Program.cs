@@ -55,7 +55,7 @@ builder.Services.AddCors(options =>
         builder => {
             builder.WithOrigins("https://localhost:5173")
             .WithMethods("POST", "GET", "PUT", "DELETE")
-            .WithHeaders(HeaderNames.ContentType);
+            .AllowAnyHeader();
         });
 });
 

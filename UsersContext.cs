@@ -13,7 +13,7 @@ public class UsersContext : IdentityUserContext<IdentityUser>
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseNpgsql(_config["ConnectionStrings:Database"]);
+        options.UseNpgsql(_config["connectionString"]);
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
