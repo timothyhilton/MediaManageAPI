@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Http;
-
 namespace MediaManageAPI.Models
 {
     public class VideoModel
