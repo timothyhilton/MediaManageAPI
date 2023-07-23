@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediaManageAPI.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaManageAPI;
-public class UsersContext : IdentityUserContext<IdentityUser>
+public class UsersContext : IdentityUserContext<ApplicationUser>
 {
     private readonly IConfiguration _config;
     public UsersContext(DbContextOptions<UsersContext> options, IConfiguration config)

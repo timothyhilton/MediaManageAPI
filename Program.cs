@@ -1,16 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
-using System.Reflection;
 using System.Text;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using MediaManageAPI;
-using Microsoft.AspNetCore.Identity;
 using MediaManageAPI.Services;
 using Microsoft.OpenApi.Models;
+using MediaManageAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +53,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddIdentityCore<IdentityUser>(options =>
+builder.Services.AddIdentityCore<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
     options.User.RequireUniqueEmail = true;

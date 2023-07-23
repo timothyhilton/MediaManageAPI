@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MediaManageAPI.Models;
 using MediaManageAPI.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace MediaManageAPI.Controllers;
 
@@ -10,17 +9,18 @@ namespace MediaManageAPI.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _config;
     private readonly TokenService _tokenService;
     private readonly UsersContext _context;
 
-    public AuthController(UserManager<IdentityUser> userManager, IConfiguration config, UsersContext context)
+    public AuthController(UserManager<ApplicationUser> userManager, IConfiguration config, UsersContext context)
     {
         _userManager = userManager;
         _tokenService = new TokenService(config);
         _context = context;
     }
+
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> Register(RegistrationRequestModel request)
@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
         var result = await _userManager.CreateAsync(
-            new IdentityUser { UserName = request.Username, Email = request.Email },
+            new ApplicationUser { UserName = request.Username, Email = request.Email },
             request.Password
         );
         if (result.Succeeded)

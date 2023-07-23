@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using MediaManageAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -16,7 +17,7 @@ public class TokenService
         _config = config;
     }
 
-    public string CreateToken(IdentityUser user)
+    public string CreateToken(ApplicationUser user)
     {
         var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
         var token = CreateJwtToken(
@@ -38,7 +39,7 @@ public class TokenService
             signingCredentials: credentials
         );
 
-    private List<Claim> CreateClaims(IdentityUser user)
+    private List<Claim> CreateClaims(ApplicationUser user)
     {
         try
         {
