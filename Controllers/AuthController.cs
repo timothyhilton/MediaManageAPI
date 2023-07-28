@@ -81,7 +81,7 @@ public class AuthController : ControllerBase
 
     [HttpPost, Authorize]
     [Route("GAuthCode")]
-    public async Task<ActionResult> PostGoogleAuthCode(string authCode){
+    public async Task<ActionResult> PostGoogleAuthCode([FromBody] string authCode){
         await GoogleOAuthService.HandleNewAuthCodeAsync(authCode, User, _userManager, _config["youtubeClientSecret"]!);
         return StatusCode(StatusCodes.Status201Created);
     }
