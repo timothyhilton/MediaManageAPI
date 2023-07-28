@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MediaManageAPI.Models
+﻿namespace MediaManageAPI.Models
 {
     public class AuthRequest
     {
