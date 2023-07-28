@@ -1,15 +1,8 @@
 ﻿using MediaManageAPI.Models;
 using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 
 namespace MediaManageAPI.Controllers;
 
@@ -19,12 +12,10 @@ public class VideoController : ControllerBase
 {
     private readonly IConfiguration _config;
     private readonly UserManager<ApplicationUser> _userManager;
-    private GoogleOAuthService googleOAuthService;
     public VideoController(IConfiguration config, UserManager<ApplicationUser> userManager)
     {
         _config = config;
         _userManager = userManager;
-        googleOAuthService = new GoogleOAuthService(_config, _userManager);
     }
 
     // just helps to test if the endpoint /video/ is accessible
@@ -39,7 +30,16 @@ public class VideoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> Post([FromForm] VideoModel video)
     {
-        await VideoService.PostVideo(video, googleOAuthService.GetGoogleOAuthCredential(User));
+        var credential = GoogleOAuthService.GetGoogleOAuthCredential(
+            User,
+            _userManager,
+            _config
+        );
+
+        await VideoService.PostVideo(
+            video, 
+            credential
+        );
 
         return StatusCode(StatusCodes.Status201Created);
     }

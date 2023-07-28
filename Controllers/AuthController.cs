@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MediaManageAPI.Models;
 using MediaManageAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MediaManageAPI.Controllers;
 
@@ -75,5 +76,12 @@ public class AuthController : ControllerBase
             Email = userInDb.Email,
             Token = accessToken,
         });
+    }
+
+    [HttpPost, Authorize]
+    [Route("GAuthCode")]
+    public async Task<ActionResult> PostGoogleAuthCode(string authCode){
+        await GoogleOAuthService.HandleNewAuthCodeAsync(authCode, User, _userManager, _config);
+        return StatusCode(StatusCodes.Status201Created);
     }
 }
