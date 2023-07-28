@@ -8,6 +8,8 @@ using System.IO;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace MediaManageAPI.Controllers;
 
@@ -16,10 +18,13 @@ namespace MediaManageAPI.Controllers;
 public class VideoController : ControllerBase
 {
     private readonly IConfiguration _config;
-
-    public VideoController(IConfiguration config)
+    private readonly UserManager<ApplicationUser> _userManager;
+    private GoogleOAuthService googleOAuthService;
+    public VideoController(IConfiguration config, UserManager<ApplicationUser> userManager)
     {
         _config = config;
+        _userManager = userManager;
+        googleOAuthService = new GoogleOAuthService(_config, _userManager);
     }
 
     // just helps to test if the endpoint /video/ is accessible
@@ -34,10 +39,8 @@ public class VideoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> Post([FromForm] VideoModel video)
     {
-        string youtubeClientSecret = _config["youtubeClientSecret"];
+        await VideoService.PostVideo(video, googleOAuthService.GetGoogleOAuthCredential(User));
 
-        // calls VideoService to post the video
-        await VideoService.PostVideo(video, youtubeClientSecret);
         return StatusCode(StatusCodes.Status201Created);
     }
 }
