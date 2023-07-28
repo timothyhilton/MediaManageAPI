@@ -33,7 +33,7 @@ public class VideoController : ControllerBase
         var credential = GoogleOAuthService.GetGoogleOAuthCredential(
             User,
             _userManager,
-            _config
+            _config["youtubeClientSecret"]!
         );
 
         await VideoService.PostVideo(
