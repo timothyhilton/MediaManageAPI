@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MediaManageAPI.Models;
 using MediaManageAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MediaManageAPI.Controllers;
 
@@ -13,12 +14,15 @@ public class AuthController : ControllerBase
     private readonly IConfiguration _config;
     private readonly TokenService _tokenService;
     private readonly UsersContext _context;
+    private readonly GoogleOAuthService _googleOAuthService;
 
-    public AuthController(UserManager<ApplicationUser> userManager, IConfiguration config, UsersContext context)
+    public AuthController(UserManager<ApplicationUser> userManager, IConfiguration config, UsersContext context, GoogleOAuthService googleOAuthService)
     {
         _userManager = userManager;
+        _config = config;
         _tokenService = new TokenService(config);
         _context = context;
+        _googleOAuthService = googleOAuthService;
     }
 
     [HttpPost]
@@ -60,8 +64,7 @@ public class AuthController : ControllerBase
             return BadRequest("Bad credentials");
         }
         var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, request.Password);
-        if (!isPasswordValid)
-        {
+        if (!isPasswordValid){
             return BadRequest("Bad credentials");
         }
         var userInDb = _context.Users.FirstOrDefault(u => u.Email == request.Email);
@@ -75,5 +78,11 @@ public class AuthController : ControllerBase
             Email = userInDb.Email,
             Token = accessToken,
         });
+    }
+
+    [HttpPost, Authorize]
+    [Route("GAuthCode")]
+    public async Task<IActionResult> PostGoogleAuthCode([FromBody] string authCode){
+        return await _googleOAuthService.HandleNewAuthCodeAsync(authCode, User);
     }
 }

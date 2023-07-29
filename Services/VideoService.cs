@@ -13,33 +13,9 @@ using Google.Apis.Util.Store;
 namespace MediaManageAPI.Services;
 public class VideoService
 {
-    public static async Task PostVideo(VideoModel video, string youtubeClientSecret)
+    public static async Task PostVideo(VideoModel video, UserCredential credential)
     {
         {
-            var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
-            {
-                ClientSecrets = new ClientSecrets
-                {
-                    ClientId = "899123600204-92s1qc16e23p7ldjnc32cji6gsfpd1je.apps.googleusercontent.com",
-                    ClientSecret = youtubeClientSecret
-                },
-                Scopes = new string[]{"https://www.googleapis.com/auth/youtube.upload"},
-                DataStore = new FileDataStore("Store")
-            });
-
-            var tokenResponse = await flow.ExchangeCodeForTokenAsync(
-                "test", // temporary
-                video.authCode,
-                "postmessage", // WHY DOES THIS WORK!?????
-                CancellationToken.None
-            );
-
-            var credential = new UserCredential(
-                flow, 
-                "test", // temporary
-                tokenResponse
-            );
-
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,

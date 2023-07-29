@@ -14,7 +14,7 @@ public class UsersContext : IdentityUserContext<ApplicationUser>
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseNpgsql(_config["connectionString"]);
+        options.UseNpgsql(_config["connectionString"]!);
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

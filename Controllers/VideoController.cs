@@ -1,13 +1,9 @@
-﻿using MediaManageAPI.Models;
+﻿using Google.Apis.Auth.OAuth2;
+using MediaManageAPI.Models;
 using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace MediaManageAPI.Controllers;
 
@@ -16,10 +12,13 @@ namespace MediaManageAPI.Controllers;
 public class VideoController : ControllerBase
 {
     private readonly IConfiguration _config;
-
-    public VideoController(IConfiguration config)
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly GoogleOAuthService _googleOAuthService;
+    public VideoController(IConfiguration config, UserManager<ApplicationUser> userManager, GoogleOAuthService googleOAuthService)
     {
         _config = config;
+        _userManager = userManager;
+        _googleOAuthService = googleOAuthService;
     }
 
     // just helps to test if the endpoint /video/ is accessible
@@ -32,12 +31,16 @@ public class VideoController : ControllerBase
     [HttpPost, Authorize]
     [RequestSizeLimit(150_000_000)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult> Post([FromForm] VideoModel video)
+    public async Task<IActionResult> Post([FromForm] VideoModel video)
     {
-        string youtubeClientSecret = _config["youtubeClientSecret"];
+        IActionResult credentialResult = await _googleOAuthService.GetGoogleOAuthCredential(User);
+    
+        if (credentialResult is OkObjectResult okObjectResult && okObjectResult.Value is UserCredential credential){
+            await VideoService.PostVideo(video, credential);
+            
+            return StatusCode(StatusCodes.Status201Created);
+        }
 
-        // calls VideoService to post the video
-        await VideoService.PostVideo(video, youtubeClientSecret);
-        return StatusCode(StatusCodes.Status201Created);
+        return credentialResult;
     }
 }
