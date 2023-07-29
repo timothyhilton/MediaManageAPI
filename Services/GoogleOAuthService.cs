@@ -5,6 +5,7 @@ using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Util.Store;
 using MediaManageAPI.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MediaManageAPI.Services;
 public class GoogleOAuthService
@@ -16,22 +17,39 @@ public class GoogleOAuthService
         _userManager = userManager;
         _config = config;
     }
-    public async Task HandleNewAuthCodeAsync(string authCode, System.Security.Claims.ClaimsPrincipal claimsUser){
-        var user = await _userManager.FindByIdAsync(_userManager.GetUserId(claimsUser)); // possible bad implementation?
+    public async Task<IActionResult> HandleNewAuthCodeAsync(string authCode, System.Security.Claims.ClaimsPrincipal claimsUser)
+    {
+        var userName = claimsUser.FindFirstValue(ClaimTypes.Name);
+        if(string.IsNullOrEmpty(userName)){
+            return new NotFoundResult();
+        }
+
+        var user = await _userManager.FindByNameAsync(userName);
+        if(user == null){
+            return new NotFoundResult();
+        }
 
         var flow = GetFlow();
 
         var tokenResponse = await flow.ExchangeCodeForTokenAsync(
-            "test", //temporary
+            userName, 
             authCode,
-            "postmessage", // WHY DOES THIS WORK!?????
+            "postmessage", 
             CancellationToken.None
         );
+        
+        if(tokenResponse == null){
+            return new BadRequestResult();
+        }
 
-        //user.YoutubeRefreshToken = tokenResponse.RefreshToken;
+        user.YoutubeRefreshToken = tokenResponse.RefreshToken;
 
-        //var result = await userManager.UpdateAsync(user);
-        Console.WriteLine(tokenResponse.RefreshToken);
+        var result = await _userManager.UpdateAsync(user);
+        if(!result.Succeeded){
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        }
+
+        return new OkResult();
     }
 
     public UserCredential GetGoogleOAuthCredential(System.Security.Claims.ClaimsPrincipal claimsUser){

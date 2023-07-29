@@ -83,8 +83,7 @@ public class AuthController : ControllerBase
 
     [HttpPost, Authorize]
     [Route("GAuthCode")]
-    public async Task<ActionResult> PostGoogleAuthCode([FromBody] string authCode){
-        await _googleOAuthService.HandleNewAuthCodeAsync(authCode, User);
-        return StatusCode(StatusCodes.Status201Created);
+    public async Task<IActionResult> PostGoogleAuthCode([FromBody] string authCode){
+        return await _googleOAuthService.HandleNewAuthCodeAsync(authCode, User);
     }
 }
