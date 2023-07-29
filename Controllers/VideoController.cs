@@ -1,4 +1,5 @@
-﻿using MediaManageAPI.Models;
+﻿using Google.Apis.Auth.OAuth2;
+using MediaManageAPI.Models;
 using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -30,15 +31,16 @@ public class VideoController : ControllerBase
     [HttpPost, Authorize]
     [RequestSizeLimit(150_000_000)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult> Post([FromForm] VideoModel video)
+    public async Task<IActionResult> Post([FromForm] VideoModel video)
     {
-        var credential = _googleOAuthService.GetGoogleOAuthCredential(User);
+        IActionResult credentialResult = _googleOAuthService.GetGoogleOAuthCredential(User);
+    
+        if (credentialResult is OkObjectResult okObjectResult && okObjectResult.Value is UserCredential credential){
+            await VideoService.PostVideo(video, credential);
+            
+            return StatusCode(StatusCodes.Status201Created);
+        }
 
-        await VideoService.PostVideo(
-            video, 
-            credential
-        );
-
-        return StatusCode(StatusCodes.Status201Created);
+        return credentialResult;
     }
 }
