@@ -9,10 +9,17 @@ using Microsoft.AspNetCore.Identity;
 namespace MediaManageAPI.Services;
 public class GoogleOAuthService
 {
-    public static async Task HandleNewAuthCodeAsync(string authCode, System.Security.Claims.ClaimsPrincipal claimsUser, UserManager<ApplicationUser> userManager, string youtubeClientSecret){
-        var user = await userManager.FindByIdAsync(userManager.GetUserId(claimsUser)); // possible bad implementation?
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IConfiguration _config;
+    public GoogleOAuthService(UserManager<ApplicationUser> userManager, IConfiguration config)
+    {
+        _userManager = userManager;
+        _config = config;
+    }
+    public async Task HandleNewAuthCodeAsync(string authCode, System.Security.Claims.ClaimsPrincipal claimsUser){
+        var user = await _userManager.FindByIdAsync(_userManager.GetUserId(claimsUser)); // possible bad implementation?
 
-        var flow = GetFlow(youtubeClientSecret);
+        var flow = GetFlow();
 
         var tokenResponse = await flow.ExchangeCodeForTokenAsync(
             "test", //temporary
@@ -21,13 +28,14 @@ public class GoogleOAuthService
             CancellationToken.None
         );
 
-        user.YoutubeRefreshToken = tokenResponse.RefreshToken;
+        //user.YoutubeRefreshToken = tokenResponse.RefreshToken;
 
-        var result = await userManager.UpdateAsync(user);
+        //var result = await userManager.UpdateAsync(user);
+        Console.WriteLine(tokenResponse.RefreshToken);
     }
 
-    public static UserCredential GetGoogleOAuthCredential(System.Security.Claims.ClaimsPrincipal claimsUser, UserManager<ApplicationUser> userManager, string youtubeClientSecret){
-        var flow = GetFlow(youtubeClientSecret);
+    public UserCredential GetGoogleOAuthCredential(System.Security.Claims.ClaimsPrincipal claimsUser){
+        var flow = GetFlow();
 
         var tokenResponse = new TokenResponse { 
             RefreshToken = claimsUser.FindFirstValue("YoutubeRefreshToken")
@@ -42,12 +50,12 @@ public class GoogleOAuthService
         return credential;
     }
 
-    private static GoogleAuthorizationCodeFlow GetFlow(string youtubeClientSecret){
+    private GoogleAuthorizationCodeFlow GetFlow(){
         return new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer{
             ClientSecrets = new ClientSecrets
             {
                 ClientId = "899123600204-92s1qc16e23p7ldjnc32cji6gsfpd1je.apps.googleusercontent.com",
-                ClientSecret = youtubeClientSecret
+                ClientSecret = _config["youtubeClientSecret"]
             },
             Scopes = new string[]{"https://www.googleapis.com/auth/youtube.upload"},
             DataStore = new FileDataStore("Store")

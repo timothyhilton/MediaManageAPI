@@ -12,10 +12,12 @@ public class VideoController : ControllerBase
 {
     private readonly IConfiguration _config;
     private readonly UserManager<ApplicationUser> _userManager;
-    public VideoController(IConfiguration config, UserManager<ApplicationUser> userManager)
+    private readonly GoogleOAuthService _googleOAuthService;
+    public VideoController(IConfiguration config, UserManager<ApplicationUser> userManager, GoogleOAuthService googleOAuthService)
     {
         _config = config;
         _userManager = userManager;
+        _googleOAuthService = googleOAuthService;
     }
 
     // just helps to test if the endpoint /video/ is accessible
@@ -30,11 +32,7 @@ public class VideoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult> Post([FromForm] VideoModel video)
     {
-        var credential = GoogleOAuthService.GetGoogleOAuthCredential(
-            User,
-            _userManager,
-            _config["youtubeClientSecret"]!
-        );
+        var credential = _googleOAuthService.GetGoogleOAuthCredential(User);
 
         await VideoService.PostVideo(
             video, 

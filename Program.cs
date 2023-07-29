@@ -84,6 +84,8 @@ builder.Services
     };
 });
 
+builder.Services.AddScoped<GoogleOAuthService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

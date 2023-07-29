@@ -14,13 +14,15 @@ public class AuthController : ControllerBase
     private readonly IConfiguration _config;
     private readonly TokenService _tokenService;
     private readonly UsersContext _context;
+    private readonly GoogleOAuthService _googleOAuthService;
 
-    public AuthController(UserManager<ApplicationUser> userManager, IConfiguration config, UsersContext context)
+    public AuthController(UserManager<ApplicationUser> userManager, IConfiguration config, UsersContext context, GoogleOAuthService googleOAuthService)
     {
         _userManager = userManager;
         _config = config;
         _tokenService = new TokenService(config);
         _context = context;
+        _googleOAuthService = googleOAuthService;
     }
 
     [HttpPost]
@@ -82,7 +84,7 @@ public class AuthController : ControllerBase
     [HttpPost, Authorize]
     [Route("GAuthCode")]
     public async Task<ActionResult> PostGoogleAuthCode([FromBody] string authCode){
-        await GoogleOAuthService.HandleNewAuthCodeAsync(authCode, User, _userManager, _config["youtubeClientSecret"]!);
+        await _googleOAuthService.HandleNewAuthCodeAsync(authCode, User);
         return StatusCode(StatusCodes.Status201Created);
     }
 }
