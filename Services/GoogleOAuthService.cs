@@ -56,10 +56,15 @@ public class GoogleOAuthService
         return new OkResult();
     }
 
-    public IActionResult GetGoogleOAuthCredential(System.Security.Claims.ClaimsPrincipal claimsUser)
+    public async Task<IActionResult> GetGoogleOAuthCredential(System.Security.Claims.ClaimsPrincipal claimsUser)
     {
         var userName = claimsUser.FindFirstValue(ClaimTypes.Name);
-        if (string.IsNullOrEmpty(userName)){
+        if(string.IsNullOrEmpty(userName)){
+            return new NotFoundResult();
+        }
+
+        var user = await _userManager.FindByNameAsync(userName);
+        if(user == null){
             return new NotFoundResult();
         }
 
@@ -67,7 +72,7 @@ public class GoogleOAuthService
         try{ flow = GetFlow(); }
         catch { return new StatusCodeResult(500); }
 
-        var refreshToken = claimsUser.FindFirstValue("YoutubeRefreshToken");
+        var refreshToken = user.YoutubeRefreshToken;
         if (string.IsNullOrEmpty(refreshToken)){
             return new BadRequestObjectResult("ERROR: no refresh token");
         }

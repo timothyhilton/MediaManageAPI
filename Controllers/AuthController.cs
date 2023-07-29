@@ -64,8 +64,7 @@ public class AuthController : ControllerBase
             return BadRequest("Bad credentials");
         }
         var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, request.Password);
-        if (!isPasswordValid)
-        {
+        if (!isPasswordValid){
             return BadRequest("Bad credentials");
         }
         var userInDb = _context.Users.FirstOrDefault(u => u.Email == request.Email);

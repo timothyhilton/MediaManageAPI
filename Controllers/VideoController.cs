@@ -33,7 +33,7 @@ public class VideoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Post([FromForm] VideoModel video)
     {
-        IActionResult credentialResult = _googleOAuthService.GetGoogleOAuthCredential(User);
+        IActionResult credentialResult = await _googleOAuthService.GetGoogleOAuthCredential(User);
     
         if (credentialResult is OkObjectResult okObjectResult && okObjectResult.Value is UserCredential credential){
             await VideoService.PostVideo(video, credential);
