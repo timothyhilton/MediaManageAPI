@@ -52,20 +52,28 @@ public class GoogleOAuthService
         return new OkResult();
     }
 
-    public UserCredential GetGoogleOAuthCredential(System.Security.Claims.ClaimsPrincipal claimsUser){
-        var flow = GetFlow();
+    public IActionResult GetGoogleOAuthCredential(System.Security.Claims.ClaimsPrincipal claimsUser)
+    {
+        var userName = claimsUser.FindFirstValue(ClaimTypes.Name);
+        if (string.IsNullOrEmpty(userName)){
+            return new NotFoundResult();
+        }
 
-        var tokenResponse = new TokenResponse { 
-            RefreshToken = claimsUser.FindFirstValue("YoutubeRefreshToken")
-        };
+        IAuthorizationCodeFlow flow;
+        try{ flow = GetFlow(); }
+        catch { return new StatusCodeResult(500); }
 
-        var credential = new UserCredential(
-            flow, 
-            claimsUser.FindFirstValue(ClaimTypes.NameIdentifier),
-            tokenResponse
-        );
+        var refreshToken = claimsUser.FindFirstValue("YoutubeRefreshToken");
+        if (string.IsNullOrEmpty(refreshToken)){
+            return new BadRequestObjectResult("ERROR: no refresh token");
+        }
+        var tokenResponse = new TokenResponse { RefreshToken = refreshToken };
 
-        return credential;
+        UserCredential credential;
+        try{ credential = new UserCredential(flow, userName, tokenResponse); }
+        catch { return new StatusCodeResult(500); }
+
+        return new OkObjectResult(credential);
     }
 
     private GoogleAuthorizationCodeFlow GetFlow(){
