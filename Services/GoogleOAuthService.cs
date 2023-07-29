@@ -31,12 +31,16 @@ public class GoogleOAuthService
 
         var flow = GetFlow();
 
-        var tokenResponse = await flow.ExchangeCodeForTokenAsync(
-            userName, 
-            authCode,
-            "postmessage", 
-            CancellationToken.None
-        );
+        TokenResponse tokenResponse;
+        try{
+            tokenResponse = await flow.ExchangeCodeForTokenAsync(
+                userName,
+                authCode,
+                "postmessage",
+                CancellationToken.None
+            );
+        }
+        catch{ return new BadRequestObjectResult("ERROR: bad auth code"); }
         
         if(tokenResponse == null){
             return new BadRequestResult();
