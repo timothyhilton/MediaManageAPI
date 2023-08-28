@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MediaManageAPI.Models;
 using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Google.Apis.Auth.OAuth2.Responses;
 
 namespace MediaManageAPI.Controllers;
 
@@ -53,25 +55,28 @@ public class AuthController : ControllerBase
     [Route("login")]
     public async Task<ActionResult<AuthResponse>> Authenticate([FromBody] AuthRequest request)
     {
-        if (!ModelState.IsValid)
-        {
+        if (!ModelState.IsValid){
             return BadRequest(ModelState);
         }
 
         var managedUser = await _userManager.FindByEmailAsync(request.Email);
-        if (managedUser == null)
-        {
+        if (managedUser == null){
             return BadRequest("Bad credentials");
         }
+        
         var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, request.Password);
         if (!isPasswordValid){
             return BadRequest("Bad credentials");
         }
+        
         var userInDb = _context.Users.FirstOrDefault(u => u.Email == request.Email);
-        if (userInDb is null)
+        if (userInDb is null){
             return Unauthorized();
+        }
+
         var accessToken = _tokenService.CreateToken(userInDb);
         await _context.SaveChangesAsync();
+        
         return Ok(new AuthResponse
         {
             Username = userInDb.UserName,
@@ -79,9 +84,61 @@ public class AuthController : ControllerBase
             Token = accessToken,
         });
     }
+    
+    [HttpGet, Authorize]
+    [Route("accountInfo")]
+    public async Task<IActionResult> GetInfo(){
+        if (!ModelState.IsValid){
+            return BadRequest(ModelState);
+        }
+
+        var userName = User.FindFirstValue(ClaimTypes.Name);
+        if (string.IsNullOrEmpty(userName)){
+            return new NotFoundResult();
+        }
+
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return new NotFoundResult();
+        }
+
+        return Ok(
+            new UserInfoModel
+            {
+                Email = email,
+                Username = userName
+            }
+        );
+    }
 
     [HttpPost, Authorize]
-    [Route("GAuthCode")]
+    [Route("accountInfo")]
+    public async Task<IActionResult> PostInfo([FromForm] UserInfoModel newUserInfo) //todo: make the weird user finding logic better
+    {
+        var userName = User.FindFirstValue(ClaimTypes.Name);
+        if (string.IsNullOrEmpty(userName)){
+            return new NotFoundResult();
+        }
+
+        var user = await _userManager.FindByNameAsync(userName);
+        if (user == null){
+            return new NotFoundResult();
+        }
+
+        user.UserName = newUserInfo.Username;
+        user.Email = newUserInfo.Email;
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded){
+            return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+        }
+
+        return new OkResult();
+    }
+
+    [HttpPost, Authorize]
+    [Route("gAuthCode")]
     public async Task<IActionResult> PostGoogleAuthCode([FromBody] string authCode){
         return await _googleOAuthService.HandleNewAuthCodeAsync(authCode, User);
     }
