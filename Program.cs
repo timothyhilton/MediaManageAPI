@@ -5,6 +5,8 @@ using MediaManageAPI;
 using MediaManageAPI.Services;
 using Microsoft.OpenApi.Models;
 using MediaManageAPI.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +85,8 @@ builder.Services
         ),
     };
 });
+
+builder.Services.Configure<IdentityOptions>(options => options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
 
 builder.Services.AddScoped<GoogleOAuthService>();
 

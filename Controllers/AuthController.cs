@@ -92,36 +92,25 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var userName = User.FindFirstValue(ClaimTypes.Name);
-        if (string.IsNullOrEmpty(userName)){
-            return new NotFoundResult();
-        }
-
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        if (string.IsNullOrEmpty(email))
-        {
+        var user = await _userManager.FindByIdAsync(_userManager.GetUserId(User)); //todo: make the weird user finding logic better
+        if (user == null){
             return new NotFoundResult();
         }
 
         return Ok(
             new UserInfoModel
             {
-                Email = email,
-                Username = userName
+                Email = user.Email,
+                Username = user.UserName
             }
         );
     }
 
     [HttpPost, Authorize]
     [Route("accountInfo")]
-    public async Task<IActionResult> PostInfo([FromForm] UserInfoModel newUserInfo) //todo: make the weird user finding logic better
+    public async Task<IActionResult> PostInfo([FromForm] UserInfoModel newUserInfo)
     {
-        var userName = User.FindFirstValue(ClaimTypes.Name);
-        if (string.IsNullOrEmpty(userName)){
-            return new NotFoundResult();
-        }
-
-        var user = await _userManager.FindByNameAsync(userName);
+        var user = await _userManager.FindByIdAsync(_userManager.GetUserId(User)); //todo: make the weird user finding logic better
         if (user == null){
             return new NotFoundResult();
         }
