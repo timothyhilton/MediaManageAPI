@@ -9,6 +9,8 @@ using System.Reflection;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Util.Store;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace MediaManageAPI.Services;
 public class VideoService
@@ -59,5 +61,53 @@ public class VideoService
         {
             Console.WriteLine("Video id '{0}' was successfully uploaded.", ytVideo.Id);
         }
+    }
+
+    public static List<YoutubeVideo> FetchVideos(UserCredential credential)
+    {
+        var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+        {
+            HttpClientInitializer = credential,
+            ApplicationName = Assembly.GetExecutingAssembly().GetName().Name
+        });
+
+        var channelsListRequest = youtubeService.Channels.List("contentDetails");
+        channelsListRequest.Mine = true;
+
+        var channelsListResponse = channelsListRequest.Execute();
+        int VideoCount = 1;
+        List<YoutubeVideo> list = new List<YoutubeVideo>();
+        foreach (var channel in channelsListResponse.Items)
+        {
+            var uploadsListId = channel.ContentDetails.RelatedPlaylists.Uploads;
+            var nextPageToken = "";
+            while (nextPageToken != null)
+            {
+                var playlistItemsListRequest = youtubeService.PlaylistItems.List("snippet");
+                playlistItemsListRequest.PlaylistId = uploadsListId;
+                playlistItemsListRequest.MaxResults = 20;
+                playlistItemsListRequest.PageToken = nextPageToken;
+                // Retrieve the list of videos uploaded to the authenticated user's channel.  
+                var playlistItemsListResponse = playlistItemsListRequest.Execute();
+                foreach (var playlistItem in playlistItemsListResponse.Items)
+                {
+                    list.Add(new YoutubeVideo
+                    {
+                        Title = playlistItem.Snippet.Title,
+                        Description = playlistItem.Snippet.Description,
+                        ImageUrl = playlistItem.Snippet.Thumbnails.High.Url,
+                        VideoSource = "https://www.youtube.com/embed/" + playlistItem.Snippet.ResourceId.VideoId,
+                        VideoId = playlistItem.Snippet.ResourceId.VideoId,
+                        VideoOwnerChannelTitle = playlistItem.Snippet.VideoOwnerChannelTitle
+
+                    }); ;
+
+                    VideoCount++;
+                }
+                nextPageToken = playlistItemsListResponse.NextPageToken;
+            }
+
+        }
+        return list;
     }
 }

@@ -4,6 +4,8 @@ using MediaManageAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Google.Apis.YouTube.v3.Data;
+using Newtonsoft.Json;
 
 namespace MediaManageAPI.Controllers;
 
@@ -28,7 +30,7 @@ public class VideoController : ControllerBase
         return str;
     }
 
-    [HttpPost, Authorize]
+    [HttpPost, Authorize] // todo: explore how to not reuse this credential fetching logic
     [RequestSizeLimit(150_000_000)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Post([FromForm] VideoModel video)
@@ -39,6 +41,19 @@ public class VideoController : ControllerBase
             await VideoService.PostVideo(video, credential);
             
             return StatusCode(StatusCodes.Status201Created);
+        }
+
+        return credentialResult;
+    }
+
+    [HttpGet("FetchVideos"), Authorize]
+    public async Task<IActionResult> FetchVideos()
+    {
+        IActionResult credentialResult = await _googleOAuthService.GetGoogleOAuthCredential(User);
+
+        if (credentialResult is OkObjectResult okObjectResult && okObjectResult.Value is UserCredential credential)
+        {
+            return Ok(JsonConvert.SerializeObject(VideoService.FetchVideos(credential)));
         }
 
         return credentialResult;

@@ -92,7 +92,7 @@ public class GoogleOAuthService
                 ClientId = "899123600204-92s1qc16e23p7ldjnc32cji6gsfpd1je.apps.googleusercontent.com",
                 ClientSecret = _config["youtubeClientSecret"]
             },
-            Scopes = new string[]{"https://www.googleapis.com/auth/youtube.upload"},
+            Scopes = new string[]{"https://www.googleapis.com/auth/youtube"},
             DataStore = new FileDataStore("Store")
         });
     }
